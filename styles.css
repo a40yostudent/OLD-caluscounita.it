@@ -1,0 +1,181 @@
+
+:root {
+    /* COLORS */
+    --orange-primary: rgb(245, 124, 0);
+    --orange-logo:    rgb(255, 152, 0);
+    --orange-light:   rgb(255, 224, 178);
+    --text-color:     rgb(33, 33, 33);
+    --light-text:     rgb(117, 117, 117);
+    --light-grey:     rgb(189, 189, 189);
+    --logo-cyan:      rgb(190, 233, 241);
+    --light-color:    rgb(255, 239, 225);
+
+    /* FONTS */
+    --serif: "Source Serif Pro", serif;
+    --sans: "Source Sans Pro", sans-serif;
+    --regular: 400;
+    --bold: 700;
+
+    /* TYPOGRAPHY */
+    --margin-side: 5%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--serif);
+    font-weight: var(--bold);
+
+    text-align: center;
+
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    margin: 0 var(--margin-side);
+}
+
+a {
+    text-decoration: none;
+}
+
+img {
+    width: 90%;
+    height: auto;
+    margin: 0 var(--margin-side);
+}
+
+body {
+    font-family: var(--sans);
+    font-weight: var(--regular);
+    color: var(--text-color);
+
+    background-color: var(--light-color);
+}
+
+header {
+    background-color: var(--orange-primary);
+
+    position: relative;
+    left: 0px;
+    top: 0px;
+    z-index: 10;
+
+    /* flexbox layout */
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header > h1 > span {
+    padding: 0 0.1em;
+}
+
+header > h1 :first-child {
+    color: var(--orange-light);
+}
+
+header > h1 :last-child {
+    color: var(--light-color);
+}
+
+nav {
+    background-color: var(--orange-primary);
+
+    position: absolute;
+    width: 30%;
+    margin-left: 70%;
+
+    transform: translateY(-15rem);
+    transition: transform 0.25s ease-out;
+}
+
+nav > a {
+    text-align: center; 
+
+    color: var(--light-color);
+    display: block;
+    margin: 1em;
+}
+
+main {
+    margin: 4em 0 2em 0;
+}
+
+article {
+    margin: 0 0 0 0;
+}
+
+article::after {
+    content: attr(hr);
+
+    display: block;
+    margin: 10% 25%;
+    border-style: solid;
+    border-width: 0.05rem;
+}
+
+article > h1 {
+    font-size: 2em;
+
+    margin: 1em 0 0 0;
+}
+
+article > h2 {
+    font-size: 1em;
+    margin: 0;
+
+    display: none;
+}
+
+article > h3 {
+    color: var(--light-text);
+
+    font-family: var(--sans);
+    font-size: 0.8em;
+    text-transform: uppercase;
+}
+
+article > p {
+    text-align: justify;
+
+    margin: 2em var(--margin-side);
+}
+
+footer {
+    background-color: var(--orange-primary);
+    
+    height: 4em;
+}
+
+#logo {
+    --logo-width: 64px;
+    width: calc(var(--logo-width) / 2);
+}
+
+#logo > img {
+    width: var(--logo-width);
+    margin: calc(var(--logo-width) / -2) 0 0 0; /* top roght bottom left */
+    position: absolute;
+}
+
+#menu-button {
+    color: var(--light-color);
+    margin-right: 1em;
+}
+
+#quality {
+    margin: 1em var(--margin-side);
+
+    /* flexbox layout */
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#quality > div {
+    padding: 1em;
+
+    background-color: green;
+}
