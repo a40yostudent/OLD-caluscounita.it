@@ -174,8 +174,31 @@ footer {
     align-items: center;
 }
 
-#quality > div {
+#quality > div :first-child {
+    text-align: center;
+    
+    border-width: 2px 2px 0 2px;
+    border-style: solid;
+    border-color: black;
+}
+
+#quality > div :nth-child(2) {
+    text-align: center;
+
+    border-width: 0 2px;
+    border-style: solid;
+    border-color: black;
+    
+    background-color: green;
+}
+
+#quality > div :last-child {
+    text-align: center;
+    font-family: var(--serif);
+    font-weight: var(--bold);
     padding: 1em;
 
-    background-color: green;
+    border-width: 0 2px 2px 2px;
+    border-style: solid;
+    border-color: black;
 }

@@ -94,31 +94,41 @@ function downloadData(stationDetails) {
     .then(() => {
       for (const reading of airSensorsReadingsArray) {
         switch (reading.idsensore) {
-          case "10027":
-            document.getElementById("PM10").innerHTML = reading.valore;
+          case "10027": // PM10
+            document.getElementById("PM10-val").innerHTML = reading.valore;
+            document.getElementById("PM10-rem").style.height = `${(40 - reading.valore) / 40 * 4}` + "em";
+            document.getElementById("PM10-val").style.height = `${(reading.valore) / 40 * 4}` + "em";
             break;
-          case "10023":
+          case "10023": // Monossido di Carbonio
             break;
-          case "10020":
+          case "10020": // Biossido di Zolfo
             break;
-          case "10017":
+          case "10017": // Ossidi di Azoto
             break;
-          case "10018":
+          case "10018": // Benzene
             break;
-          case "10025":
-            document.getElementById("O3").innerHTML = reading.valore;
+          case "10025": // Ozono
+            document.getElementById("O3-val").innerHTML = reading.valore;
+            document.getElementById("O3-rem").style.height = `${(110 - reading.valore) / 110 * 4}` + "em";
+            document.getElementById("O3-val").style.height = `${(reading.valore) / 110 * 4}` + "em";
             break;
-          case "10019":
-            document.getElementById("NO2").innerHTML = reading.valore;
+          case "10019": // Biossido di Azoto
+            document.getElementById("NO2-val").innerHTML = reading.valore;
+            document.getElementById("NO2-rem").style.height = `${(50 - reading.valore) / 50 * 4}` + "em";
+            document.getElementById("NO2-val").style.height = `${(reading.valore) / 50 * 4}` + "em";
             break;
-          case "10028":
-            document.getElementById("PM25").innerHTML = reading.valore;
+          case "10028": // PM 2.5
+            document.getElementById("PM25-val").innerHTML = reading.valore;
+            document.getElementById("PM25-rem").style.height = `${(25 - reading.valore) / 25 * 4}` + "em";
+            document.getElementById("PM25-val").style.height = `${(reading.valore) / 25 * 4}` + "em";
             break;
           default:
             break;
         }
       }
-      document.getElementById("IQA").innerHTML = "ERR";
+      document.getElementById("IQA-val").innerHTML = "ERR";
+      document.getElementById("IQA-rem").style.height = "2em"; // `${(25 - reading.valore) / 25 * 4}` + "em";
+      document.getElementById("IQA-val").style.height = "2em"; // `${(reading.valore) / 25 * 4}` + "em";
     });
 }
 
