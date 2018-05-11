@@ -127,8 +127,8 @@ function downloadData(stationDetails) {
         }
       }
       document.getElementById("IQA-val").innerHTML = "ERR";
-      document.getElementById("IQA-rem").style.height = "2em"; // `${(25 - reading.valore) / 25 * 4}` + "em";
-      document.getElementById("IQA-val").style.height = "2em"; // `${(reading.valore) / 25 * 4}` + "em";
+      document.getElementById("IQA-rem").style.height = "0em"; // `${(25 - reading.valore) / 25 * 4}` + "em";
+      document.getElementById("IQA-val").style.height = "4em"; // `${(reading.valore) / 25 * 4}` + "em";
     });
 }
 

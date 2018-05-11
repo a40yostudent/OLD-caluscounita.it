@@ -8,16 +8,16 @@
             "name": "Launch Chrome",
             "type": "chrome",
             "request": "launch",
-            "url": "http://localhost:8080",
+            "url": "http://192.168.0.100:8080",
             "webRoot": "${workspaceFolder}"
         },
         {   
             // /Users/sabino/Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary --remote-debugging-port=9222 http://192.168.0.100:8080
-            // php -S localhost:8080
+            // php -S 192.168.0.100:8080
             "name": "Attach Chrome Canary",
             "type": "chrome",
             "request": "attach",
-            "url": "http://localhost:8080",
+            "url": "http://192.168.0.100:8080",
             "port": 9222,
             "webRoot": "${workspaceFolder}"
         }
