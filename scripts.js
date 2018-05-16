@@ -90,7 +90,7 @@ function downloadData(stationDetails) {
                     unitamisura: stationDetails.unitamisura,
                     data: sensorReading[0].data,
                     valore: sensorReading[0].valore,
-                    stato: sensorReading[0].stato,
+                    stato: sensorReading[0].stato
                 });
             }
         })
