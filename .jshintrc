@@ -1,6 +1,6 @@
 {
-    "jshint esversion": 6,
-    "jshint": "-W097",
+    "esversion": 6,
+    "-W097": true,
     "globals": {
         "console": true,
         "document": true,
