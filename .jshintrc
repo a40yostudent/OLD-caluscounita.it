@@ -1,0 +1,9 @@
+{
+    "jshint esversion": 6,
+    "jshint": "-W097",
+    "globals": {
+        "console": true,
+        "document": true,
+        "fetch": true
+    }
+}
