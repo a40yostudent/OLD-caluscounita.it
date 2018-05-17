@@ -33,118 +33,137 @@ function openMenu(button, menu) {
 
 // FETCH DATA FROM dati.lombardia.it
 
-const AIR_QUALITY_STATIONS =
-    'https://www.dati.lombardia.it/resource/t4f9-i4k5.json';
-const AIR_SENSORS_DATA =
-    'https://www.dati.lombardia.it/resource/2tw8-h2cp.json';
-const CALUSCO_STATIONS_NUMBER = '685';
+const ELENCO_SENSORI = [
+    {
+        id: 'PM10',
+        description: 'Materia Particolata di diametro <= 10µm',
+        operator: 'media giornaliera',
+        units: 'µg/m³',
+        query: {
+            idsensore: 101827,
+            idoperatore: 1,
+            $order: 'data%20DESC'
+        },
+        readings: [] // { date: date, value: number }
+    },
+    {
+        id: 'PM2.5',
+        description: 'Materia Particolata di diametro <= 2.5µm',
+        operator: 'media giornaliera',
+        units: 'µg/m³',
+        query: {
+            idsensore: 105569,
+            idoperatore: 1,
+            $order: 'data%20DESC'
+        },
+        readings: [] // { date: date, value: number }
+    },
+    {
+        id: 'NO2',
+        description: 'Biossido di Azoto',
+        operator: 'massimo giornaliero',
+        units: 'µg/m³',
+        query: {
+            idsensore: 101825,
+            idoperatore: 12,
+            $order: 'data%20DESC'
+        },
+        readings: [] // { date: date, value: number }
+    },
+    {
+        id: 'O3',
+        description: 'Ozono',
+        operator: 'massimo giornaliero',
+        units: 'µg/m³',
+        query: {
+            idsensore: 101826,
+            idoperatore: 12,
+            $order: 'data%20DESC'
+        },
+        readings: [] // { date: date, value: number }
+    },
+    {
+        id: 'O3',
+        description: 'Ozono',
+        operator: 'massima media mobile 8h',
+        units: 'µg/m³',
+        query: {
+            idsensore: 101826,
+            idoperatore: 11,
+            $order: 'data%20DESC'
+        },
+        readings: [] // { date: date, value: number }
+    }
+];
+const DATI_STIME_COMUNALI = 'https://www.dati.lombardia.it/resource/pfdd-9uzs.json';
+// const ID_STAZIONE = '100558'; // non usato, gli id dei sensori sono già salvati.
 
-// let airSensorsReadingsArray = new Array(9)
-//     .fill()
-//     .map( () => {
-//         return {
-//             idsensore: "",
-//             nometiposensore: "",
-//             unitamisura: "",
-//             valore: "",
-//             data:""
-//         }
-//     });
+const allDataRequests = [];
 
-let airSensorsReadingsArray = [];
+for (const sensor of ELENCO_SENSORI) {
+    const query = sensor.query;
+    let dataRequest = `${DATI_STIME_COMUNALI}?`;
 
-fetch(AIR_QUALITY_STATIONS + '?idstazione=' + CALUSCO_STATIONS_NUMBER)
-    .then(response => {
-        return response.json();
-    })
-    .catch(error => console.error('Error fetching stations:', error))
-    .then(stationsDetailsArray => {
-        for (const stationDetails of stationsDetailsArray) {
-            downloadData(stationDetails);
-        }
-    });
+    for (const key in query) {
+        dataRequest += `${key}=${query[key]}&`;
+    }
 
-function downloadData(stationDetails) {
-    // console.log(stationDetails);
-    fetch(
-        AIR_SENSORS_DATA +
-            '?' +
-            '$order=data%20DESC' +
-            '&' +
-            'idsensore=' +
-            stationDetails.idsensore +
-            '&' +
-            '$limit=1'
-    )
-        .then(response => {
-            return response.json();
-        })
-        .catch(error =>
-            console.error('Error fetching data from stations:', error)
-        )
-        .then(sensorReading => {
-            if (sensorReading[0].stato == 'VA') {
-                airSensorsReadingsArray.push({
-                    idsensore: stationDetails.idsensore,
-                    nometiposensore: stationDetails.nometiposensore,
-                    unitamisura: stationDetails.unitamisura,
-                    data: sensorReading[0].data,
-                    valore: sensorReading[0].valore,
-                    stato: sensorReading[0].stato
-                });
-            }
-        })
-        .then(() => {
-            for (const reading of airSensorsReadingsArray) {
-                switch (reading.idsensore) {
-                case '10027': // PM10
-                    document.getElementById('PM10-val').innerHTML =
-                            reading.valore;
-                    document.getElementById('PM10-rem').style.height =
-                            `${(40 - reading.valore) / 40 * 4}` + 'em';
-                    document.getElementById('PM10-val').style.height =
-                            `${reading.valore / 40 * 4}` + 'em';
+    allDataRequests.push(dataRequest);
+}
+
+for (const request of allDataRequests) {
+    fetch(request)
+        .then( response => response.json() )
+        .catch( error => console.error('Error fetching data:', error) )
+        .then( data => {
+            ELENCO_SENSORI.forEach( item => {
+                for (const element of data) {
+                    if (element.idsensore == item.query.idsensore && element.idoperatore == item.query.idoperatore) {
+                        const reading = {
+                            date: element.data,
+                            value: element.valore
+                        };
+                        item.readings.push( reading );
+                    }
+                }
+            });
+            return ELENCO_SENSORI;
+        } )
+        .then( elencoSensori => {
+            elencoSensori.forEach( function(item) {
+                switch (item.query.idsensore) {
+                case 101827: // PM10
+                    setHTMLby('PM10', 40);
                     break;
-                case '10023': // Monossido di Carbonio
+                case 105569: // PM 2.5
+                    setHTMLby('PM25', 25);
                     break;
-                case '10020': // Biossido di Zolfo
+                case 101825: // Biossido di Azoto
+                    setHTMLby('NO2', 50);
                     break;
-                case '10017': // Ossidi di Azoto
-                    break;
-                case '10018': // Benzene
-                    break;
-                case '10025': // Ozono
-                    document.getElementById('O3-val').innerHTML =
-                            reading.valore;
-                    document.getElementById('O3-rem').style.height =
-                            `${(110 - reading.valore) / 110 * 4}` + 'em';
-                    document.getElementById('O3-val').style.height =
-                            `${reading.valore / 110 * 4}` + 'em';
-                    break;
-                case '10019': // Biossido di Azoto
-                    document.getElementById('NO2-val').innerHTML =
-                            reading.valore;
-                    document.getElementById('NO2-rem').style.height =
-                            `${(50 - reading.valore) / 50 * 4}` + 'em';
-                    document.getElementById('NO2-val').style.height =
-                            `${reading.valore / 50 * 4}` + 'em';
-                    break;
-                case '10028': // PM 2.5
-                    document.getElementById('PM25-val').innerHTML =
-                            reading.valore;
-                    document.getElementById('PM25-rem').style.height =
-                            `${(25 - reading.valore) / 25 * 4}` + 'em';
-                    document.getElementById('PM25-val').style.height =
-                            `${reading.valore / 25 * 4}` + 'em';
+                case 101826: // Ozono
+                    if (item.query.idoperatore == 12) { // massimo giornaliero
+                        setHTMLby('O3', 200);
+                    } else if (item.query.idoperatore == 11) { // max media mobile 8h
+                        setHTMLby('O3-8h', 120);
+                    }
                     break;
                 default:
                     break;
                 }
-            }
-            document.getElementById('IQA-val').innerHTML = 'ERR';
-            document.getElementById('IQA-rem').style.height = '0em'; // `${(25 - reading.valore) / 25 * 4}` + "em";
-            document.getElementById('IQA-val').style.height = '4em'; // `${(reading.valore) / 25 * 4}` + "em";
-        });
-}
+        
+                document.getElementById('IQA-val').innerHTML = 'ERR';
+                document.getElementById('IQA-rem').style.height = '0em'; // `${(25 - data.valore) / 25 * 4}` + "em";
+                document.getElementById('IQA-val').style.height = '4em'; // `${(data.valore) / 25 * 4}` + "em";
 
-console.log(airSensorsReadingsArray);
+                function setHTMLby(id, limit) {
+                    setTimeout(() => {
+                        document.getElementById(`${id}-val`).innerHTML = item.readings[0].value;
+                        document.getElementById(`${id}-rem`).style.height = `${(limit - item.readings[0].value) / limit * 4}` + 'em';
+                        document.getElementById(`${id}-val`).style.height = `${item.readings[0].value / limit * 4}` + 'em';
+                    }, 50);
+                    
+                }
+            });
+        } );
+}

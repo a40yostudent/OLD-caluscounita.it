@@ -4,6 +4,7 @@
     "globals": {
         "console": true,
         "document": true,
-        "fetch": true
+        "fetch": true,
+        "setTimeout": true
     }
 }
