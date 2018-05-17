@@ -157,7 +157,7 @@ for (const request of allDataRequests) {
                 document.getElementById('IQA-val').style.height = '4em'; // `${(data.valore) / 25 * 4}` + "em";
 
                 function setHTMLby(id, limit) {
-                    setTimeout(() => {
+                    setTimeout(() => { // WHY IS NECESSARY TO TAKE TIME???
                         document.getElementById(`${id}-val`).innerHTML = item.readings[0].value;
                         document.getElementById(`${id}-rem`).style.height = `${(limit - item.readings[0].value) / limit * 4}` + 'em';
                         document.getElementById(`${id}-val`).style.height = `${item.readings[0].value / limit * 4}` + 'em';
