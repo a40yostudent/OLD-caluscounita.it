@@ -111,6 +111,8 @@ for (const sensor of ELENCO_SENSORI) {
     allDataRequests.push(dataRequest);
 }
 
+let IQAvalue = 0;
+
 for (const request of allDataRequests) {
     fetch(request)
         .then( response => response.json() )
@@ -130,16 +132,17 @@ for (const request of allDataRequests) {
             return ELENCO_SENSORI;
         } )
         .then( elencoSensori => {
+
             elencoSensori.forEach( function(item) {
                 switch (item.query.idsensore) {
                 case 101827: // PM10
-                    setHTMLby('PM10', 40);
+                    setHTMLby('PM10', 50);
                     break;
                 case 105569: // PM 2.5
                     setHTMLby('PM25', 25);
                     break;
                 case 101825: // Biossido di Azoto
-                    setHTMLby('NO2', 50);
+                    setHTMLby('NO2', 200);
                     break;
                 case 101826: // Ozono
                     if (item.query.idoperatore == 12) { // massimo giornaliero
@@ -151,19 +154,46 @@ for (const request of allDataRequests) {
                 default:
                     break;
                 }
-        
-                document.getElementById('IQA-val').innerHTML = 'ERR';
-                document.getElementById('IQA-rem').style.height = '0em'; // `${(25 - data.valore) / 25 * 4}` + "em";
-                document.getElementById('IQA-val').style.height = '4em'; // `${(data.valore) / 25 * 4}` + "em";
+
+                setTimeout(() => { // WHY IS NECESSARY TO TAKE TIME???
+                    document.getElementById('IQA-rem').innerHTML = 'IQA';
+                    document.getElementById('IQA-val').style.background = setColorBy(IQAvalue);
+                    document.getElementById('IQA-rem').style.height = `${( 1 - IQAvalue) * 4}` + 'em';
+                    document.getElementById('IQA-val').style.height = `${IQAvalue * 4}` + 'em';
+                }, 250);
 
                 function setHTMLby(id, limit) {
                     setTimeout(() => { // WHY IS NECESSARY TO TAKE TIME???
-                        document.getElementById(`${id}-val`).innerHTML = item.readings[0].value;
-                        document.getElementById(`${id}-rem`).style.height = `${(limit - item.readings[0].value) / limit * 4}` + 'em';
+                        document.getElementById(`${id}-rem`).innerHTML = item.readings[0].value;
                         document.getElementById(`${id}-val`).style.height = `${item.readings[0].value / limit * 4}` + 'em';
+                        document.getElementById(`${id}-val`).style.backgroundColor =  setColorBy(item.readings[0].value / limit);
+                        document.getElementById(`${id}-rem`).style.height = `${(limit - item.readings[0].value) / limit * 4}` + 'em';
                     }, 50);
-                    
+                }
+
+                function setColorBy(value) {
+
+                    if (value > IQAvalue) {
+                        IQAvalue = value;
+                    }
+
+                    switch (true) {
+                    case (value == 0):
+                        return 'var(--perf)';
+                    case (value > 0 && value <= 0.5):
+                        return 'var(--good)';
+                    case (value > 0.5 && value <= 1.0):
+                        return 'var(--fair)';
+                    case (value > 1.0 && value <= 1.5):
+                        return 'var(--mean)';
+                    case (value > 1.5 && value <= 2.0):
+                        return 'var(--poor)';
+                    case (value > 2.0):
+                        return 'var(--bad)';
+                    default:
+                        return 'var(--undef)';
+                    }
                 }
             });
-        } );
+        });
 }

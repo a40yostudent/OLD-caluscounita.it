@@ -10,6 +10,15 @@
     --logo-cyan:      rgb(190, 233, 241);
     --light-color:    rgb(255, 239, 225);
 
+    /* INDEX COLORS */
+    --perf:     rgb(119, 162, 72);  /*        IQA == 0      */
+    --good:     rgb(107, 171, 224); /*        IQA < 0.5     */
+    --fair:     rgb(233, 163, 60);  /* 0.5 >= IQA < 1.0     */
+    --mean:     rgb(202, 67, 59);   /* 1.0 >= IQA < 1.5     */
+    --poor:     rgb(140, 55, 110);  /* 1.5 >= IQA < 2.0     */
+    --bad:      rgb(51, 51, 51);    /*        IQA <= 2.0    */
+    --undef:    rgb(155, 155, 155); /*        undefined     */
+
     /* FONTS */
     --serif: "Source Serif Pro", serif;
     --sans: "Source Sans Pro", sans-serif;
@@ -179,7 +188,7 @@ footer {
     
     border-width: 2px 2px 0 2px;
     border-style: solid;
-    border-color: black;
+    border-color: var(--text-color);
 }
 
 #quality > div :nth-child(2) {
@@ -187,9 +196,9 @@ footer {
 
     border-width: 0 2px;
     border-style: solid;
-    border-color: black;
+    border-color: var(--text-color);
     
-    background-color: green;
+    background-color: var(--undef);
 }
 
 #quality > div :last-child {
@@ -200,5 +209,5 @@ footer {
 
     border-width: 2px 2px 2px 2px;
     border-style: solid;
-    border-color: black;
+    border-color: var(--text-color);
 }
