@@ -156,10 +156,8 @@ for (const request of allDataRequests) {
                 }
 
                 setTimeout(() => { // WHY IS NECESSARY TO TAKE TIME???
-                    document.getElementById('IQA-rem').innerHTML = 'IQA';
-                    document.getElementById('IQA-val').style.background = setColorBy(IQAvalue);
-                    document.getElementById('IQA-rem').style.height = `${( 1 - IQAvalue) * 4}` + 'em';
-                    document.getElementById('IQA-val').style.height = `${IQAvalue * 4}` + 'em';
+                    document.getElementById('IQA-val').innerHTML = setIQALabel(IQAvalue);
+                    document.getElementById('IQA-val').style.backgroundColor = setColorBy(IQAvalue);
                 }, 250);
 
                 function setHTMLby(id, limit) {
@@ -169,6 +167,25 @@ for (const request of allDataRequests) {
                         document.getElementById(`${id}-val`).style.backgroundColor =  setColorBy(item.readings[0].value / limit);
                         document.getElementById(`${id}-rem`).style.height = `${(limit - item.readings[0].value) / limit * 4}` + 'em';
                     }, 50);
+                }
+
+                function setIQALabel(value) {
+                    switch (true) {
+                    case (value == 0):
+                        return 'Perfetta';
+                    case (value > 0 && value <= 0.5):
+                        return 'Buona';
+                    case (value > 0.5 && value <= 1.0):
+                        return 'Accettabile';
+                    case (value > 1.0 && value <= 1.5):
+                        return 'Media';
+                    case (value > 1.5 && value <= 2.0):
+                        return 'Pessima';
+                    case (value > 2.0):
+                        return 'Critica';
+                    default:
+                        return 'Non disponibile';
+                    }
                 }
 
                 function setColorBy(value) {

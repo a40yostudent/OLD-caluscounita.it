@@ -173,7 +173,31 @@ footer {
     margin-right: 1em;
 }
 
+#IQA {
+    text-align: center;
+    margin: 1em var(--margin-side);
+
+    /* flexbox layout */
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: right;
+    align-items: center;
+}
+
+#IQA > div {
+    padding: 1em;
+    width: 50%;
+
+    border-radius: 1em;
+}
+
+#IQA-lab {
+    font-family: var(--serif);
+    font-weight: var(--bold);
+}
+
 #quality {
+    text-align: center;
     margin: 1em var(--margin-side);
 
     /* flexbox layout */
@@ -184,30 +208,23 @@ footer {
 }
 
 #quality > div :first-child {
-    text-align: center;
-    
     border-width: 2px 2px 0 2px;
     border-style: solid;
     border-color: var(--text-color);
 }
 
 #quality > div :nth-child(2) {
-    text-align: center;
-
     border-width: 0 2px;
     border-style: solid;
     border-color: var(--text-color);
-    
-    background-color: var(--undef);
 }
 
 #quality > div :last-child {
-    text-align: center;
     font-family: var(--serif);
     font-weight: var(--bold);
     padding: 1em;
 
-    border-width: 2px 2px 2px 2px;
+    border-width: 2px;
     border-style: solid;
     border-color: var(--text-color);
 }
