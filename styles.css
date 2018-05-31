@@ -157,6 +157,18 @@ footer {
     height: 4em;
 }
 
+.pie-chart {
+    width: 1em;
+    background-color: transparent;
+}
+
+.pie-chart svg {
+    transform: rotate(-90deg);
+    vertical-align: middle;
+    width: 4em;
+    height: 4em;
+}
+
 #logo {
     --logo-width: 64px;
     width: calc(var(--logo-width) / 2);
