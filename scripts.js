@@ -119,20 +119,20 @@ fetchAll(urls)
         ELENCO_SENSORI.forEach( item => {
             switch (item.query.idsensore) {
             case 101827: // PM10
-                setHTMLby('PM10', item, 50);
+                // setHTMLby('PM10', item, 50);
                 pieChart('PM10', item, 50);
                 break;
             case 105569: // PM 2.5
-                setHTMLby('PM25', item, 25);
+                pieChart('PM25', item, 25);
                 break;
             case 101825: // Biossido di Azoto
-                setHTMLby('NO2', item, 200);
+                pieChart('NO2', item, 200);
                 break;
             case 101826: // Ozono
                 if (item.query.idoperatore == 12) { // massimo giornaliero
-                    setHTMLby('O3', item, 200);
+                    pieChart('O3', item, 200);
                 } else if (item.query.idoperatore == 11) { // max media mobile 8h
-                    setHTMLby('O3-8h', item, 120);
+                    pieChart('O3-8h', item, 120);
                 }
                 break;
             default:
@@ -146,14 +146,14 @@ fetchAll(urls)
     });
 
 async function fetchAll(urls) {
-    const array5 = await Promise.all( urls.map( async url => {
+    const arrayOf5 = await Promise.all( urls.map( async url => {
         const fetched = await fetch(url);
         const jsons = await fetched.json();
         return jsons;
     }));
     ELENCO_SENSORI.forEach( item => {
-        for (const array28 of array5) {
-            for (const element of array28) {
+        for (const arrayOf28 of arrayOf5) {
+            for (const element of arrayOf28) {
                 if (element.idsensore == item.query.idsensore && element.idoperatore == item.query.idoperatore) {
                     const reading = {
                         date: element.data,

@@ -158,7 +158,6 @@ footer {
 }
 
 .pie-chart {
-    width: 1em;
     background-color: transparent;
 }
 
@@ -220,23 +219,12 @@ footer {
 }
 
 #quality > div :first-child {
-    border-width: 2px 2px 0 2px;
-    border-style: solid;
-    border-color: var(--text-color);
 }
 
 #quality > div :nth-child(2) {
-    border-width: 0 2px;
-    border-style: solid;
-    border-color: var(--text-color);
 }
 
 #quality > div :last-child {
     font-family: var(--serif);
     font-weight: var(--bold);
-    padding: 1em;
-
-    border-width: 2px;
-    border-style: solid;
-    border-color: var(--text-color);
 }
