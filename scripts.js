@@ -139,6 +139,10 @@ fetchAll(urls)
                 break;
             }
         });
+    })
+    .then( function() {
+        document.getElementById('IQA-val').innerHTML = setIQALabel(maxValue);
+        document.getElementById('IQA-val').style.backgroundColor = setColorBy(maxValue);
     });
 
 async function fetchAll(urls) {
@@ -147,7 +151,6 @@ async function fetchAll(urls) {
         const jsons = await fetched.json();
         return jsons;
     }));
-    // console.log(jsons);
     ELENCO_SENSORI.forEach( item => {
         for (const array28 of array5) {
             for (const element of array28) {
@@ -163,9 +166,6 @@ async function fetchAll(urls) {
     })
     console.table(ELENCO_SENSORI);
 }
-
-document.getElementById('IQA-val').innerHTML = setIQALabel(maxValue);
-document.getElementById('IQA-val').style.backgroundColor = setColorBy(maxValue);
 
 function setHTMLby(id, item, limit) {
     document.getElementById(`${id}-rem`).innerHTML = item.readings[0].value;
